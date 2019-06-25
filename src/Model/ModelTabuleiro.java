@@ -6,6 +6,7 @@
 package Model;
 
 import Exceptions.*;
+import Threads.Timer;
 import View.Tabuleiro;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -21,13 +22,13 @@ import java.util.Observer;
  */
 public class ModelTabuleiro implements Observer, java.io.Serializable{
 
-    private final ArrayList<Peca> pecasPretas;
-    private final ArrayList<Peca> pecasBrancas;
+    public ArrayList<Peca> pecasPretas;
+    public ArrayList<Peca> pecasBrancas;
+
 
     public ModelTabuleiro()  {
         this.pecasPretas = new ArrayList<Peca>();
         this.pecasBrancas  = new ArrayList<Peca>();
-        
         init();
     }
 

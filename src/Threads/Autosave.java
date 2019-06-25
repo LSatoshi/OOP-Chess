@@ -16,15 +16,22 @@ import java.nio.file.Paths;
  * @author satoshi
  */
 public class Autosave extends Thread{
-    ModelTabuleiro model;
-    long time;
+    public Save save;
 
-    public Autosave(ModelTabuleiro model, long time) {
-        this.model = model;
-        this.time = time;
+
+    public Autosave(ModelTabuleiro model, Timer time) {
+        this.save.pecasBrancas = model.pecasBrancas;
+        this.save.pecasPretas = model.pecasPretas;
+        //this.save.time = time.time;
         start();
     }
     
+    public Autosave(Save save) {
+        this.save = save;
+        start();
+    }
+    
+    @Override
     public void run() {
         while(true) {
             this.save();
@@ -44,8 +51,7 @@ public class Autosave extends Thread{
         try {
             FileOutputStream f_out = new FileOutputStream ("chess.sav");
             ObjectOutputStream obj_out = new ObjectOutputStream (f_out);
-            obj_out.writeObject (this.model);
-            obj_out.writeObject (this.time);
+            obj_out.writeObject (this.save);
         } catch (Exception e) {
             System.out.println (e.toString ());
             System.exit (1);

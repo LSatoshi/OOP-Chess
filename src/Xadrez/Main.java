@@ -6,10 +6,12 @@ package Xadrez;
 
 import Controler.TabuleiroController;
 import Model.ModelTabuleiro;
-import Threads.Autosave;
-import Threads.Timer;
+import Threads.*;
 import View.Tabuleiro;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  *
@@ -22,20 +24,23 @@ public class Main {
    */
 public static void main(String[] args) {
     java.awt.EventQueue.invokeLater(new Runnable() {
+        @Override
         public void run() {
-        /*Object obj = new Object ();    
-        try {
-            FileInputStream f_in = new FileInputStream ("chess.sav");
-            ObjectInputStream obj_in = new ObjectInputStream (f_in);
-            obj = obj_in.readObject ();
-            //ModelTabuleiro model = (ModelTabuleiro) obj;
+        Object obj = new Object ();
+        Path path = Paths.get("chess.sav");
+        Save sav = null;
+        if(Files.exists(path) == true) {
+            try {   
+                FileInputStream f_in = new FileInputStream ("chess.sav");
+                ObjectInputStream obj_in = new ObjectInputStream (f_in);
+                obj = obj_in.readObject ();
+                sav = (Save) obj;
+            }
+            catch (Exception e) {
+                System.out.println (e.toString ());
+            }
         }
-        catch (Exception e) {
-            System.out.println (e.toString ());
-            System.exit (1);
-        }*/
-        //ModelTabuleiro model = (ModelTabuleiro) obj;
-        ModelTabuleiro model = new ModelTabuleiro();  
+        ModelTabuleiro model = new ModelTabuleiro();
         // cria o View (Janela do Tabuleiro)
         Tabuleiro viewTabuleiro = new Tabuleiro(model);  
         // Cria o Controller do Tabuleiro.... todos eventos tratados aqui..
@@ -46,7 +51,11 @@ public static void main(String[] args) {
         tabuleiroController.addView(viewTabuleiro);
         tabuleiroController.addModel(model);
         Timer timer = new Timer(viewTabuleiro);
-        Autosave save = new Autosave(model, 0);
+        if(sav != null) {
+            sav.load(model,timer);
+        }
+        Save save = new Save(model, timer);
+        Autosave autosave = new Autosave(save);
         // finalmente, executa o view.....
         tabuleiroController.runTabuleiro();
       }

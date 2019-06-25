@@ -12,6 +12,7 @@ package View;
 
 import Controler.TabuleiroController;
 import Model.ModelTabuleiro;
+import Threads.Timer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;

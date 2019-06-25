@@ -16,9 +16,8 @@ import java.util.logging.Logger;
  * @author satoshi
  */
 public class Timer extends Thread{
-    long time = 0;
-    SimpleDateFormat ft = new SimpleDateFormat ("mm:ss");
-    private Tabuleiro view;
+    public long time = 0;
+    public Tabuleiro view;
 
     public Timer(Tabuleiro view) {
         this.view = view;
@@ -26,13 +25,9 @@ public class Timer extends Thread{
         start();
     }
     
-    public Timer(Timer t) {
-        this.view = t.view;
-        this.time = t.time;
-        start();
-    }
     
     public void run() {
+        SimpleDateFormat ft = new SimpleDateFormat ("mm:ss");
         while(true) {
             try {
                 //System.out.println(ft.format(time));
