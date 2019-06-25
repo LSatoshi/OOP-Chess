@@ -21,10 +21,11 @@ public class Timer extends Thread{
 
     public Timer(Tabuleiro view) {
         this.view = view;
-        this.time = 0;
         start();
     }
     
+    public Timer(){
+    }
     
     public void run() {
         SimpleDateFormat ft = new SimpleDateFormat ("mm:ss");
